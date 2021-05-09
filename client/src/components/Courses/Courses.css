@@ -1,0 +1,44 @@
+.course-table {
+    display: inline-block;
+    border: 2px solid gray;
+    border-collapse: collapse;
+}
+
+.course-table td {
+    padding: 10px 20px;
+}
+
+.course-table td.name {
+    text-align: left
+}
+
+.course-table thead {
+    background-color: gray;
+    color: white;
+}
+
+.courses-subtitle {
+    margin: 20px 0px 40px 0px;
+}
+
+.course-table input[type='checkbox'] {
+    width: 20px;
+    height: 20px;
+}
+
+.courses-footer {
+    text-align: center;
+    margin: 20px 0px;
+}
+
+.courses-subtitle .logout {
+    font-style: oblique;
+    color:saddlebrown;
+    font-weight: bold;
+}
+
+.courses-subtitle .logout:hover {
+    font-style: normal;
+    cursor: pointer;
+}
+

@@ -1,0 +1,40 @@
+form {
+    display: inline-block;
+    padding: 10px 30px;
+    margin: 50px;
+    max-width: 300px;
+    border: 2px solid gray;
+    text-align: left;
+}
+
+form h1 {
+    text-align: center;
+}
+
+form h2 {
+    font-size: 20px;
+}
+
+form input[type='text'], form input[type='password'] {
+    width: 100%;
+    padding: 5px 15px;
+    box-sizing: border-box;
+    font-size: 20px;
+}
+
+form input[type='submit'] {
+    padding: 10px 20px;
+    font-size: 20px;
+}
+
+form .footer {
+    text-align: center;
+    margin: 20px;
+}
+
+.err-msg {
+    background-color: rgba(255, 0, 0, 0.089);
+    color: red;
+    border: 1px solid rgb(212, 92, 92);
+    padding: 5px 20px;
+}
