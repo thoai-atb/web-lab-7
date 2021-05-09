@@ -3,8 +3,38 @@ import { useAuth } from '../../contexts/AuthContext'
 import './Courses.css'
 
 export default function Courses() {
-    const { currentStudent, logout } = useAuth()
+    const {currentStudent, logout} = useAuth()
     const [courses, setCourses] = useState([])
+    const [loading, setLoading] = useState(false)
+    
+    const checkboxChanged = (e, courseID) => {
+        setLoading(true)
+        const data = {
+            StudentID: currentStudent.StudentID,
+            CourseID: courseID,
+            Value: e.target.checked
+        }
+        const fetchUpdate = async () => {
+            await fetch(`/registration/`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            const fetchData = async () => {
+                const res = await fetch(`/courses/${currentStudent.StudentID}`)
+                const data = await res.json()
+                setCourses(data)
+            }
+            fetchData()
+        }
+        fetchUpdate()
+    }
+
+    useEffect(() => {
+        setLoading(false)
+    }, [courses])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,7 +55,8 @@ export default function Courses() {
                 <thead>
                     <tr>
                         <td>ID</td>
-                        <td>Name</td>
+                        <td>Course ID</td>
+                        <td>Course Name</td>
                         <td>Selected</td>
                     </tr>
                 </thead>
@@ -35,8 +66,9 @@ export default function Courses() {
                         return (
                             <tr key={index}>
                                 <td>{index}</td>
+                                <td>{course.CourseID}</td>
                                 <td className='name'>{course.CourseName}</td>
-                                <td><input type='checkbox'></input></td>
+                                <td><input type='checkbox' checked={course.Selected === 1} onChange={(e) => checkboxChanged(e, course.CourseID)}></input></td>
                             </tr>
                         )
                     })
@@ -44,8 +76,9 @@ export default function Courses() {
                 </tbody>
             </table>
             <div className='courses-footer'>
-                <button>Save</button>
-                <button>Refresh</button>
+                {
+                    loading && <p className='msg'>saving registration ...</p>
+                }
             </div>
         </div>
     )

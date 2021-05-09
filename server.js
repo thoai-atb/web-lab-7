@@ -19,13 +19,14 @@ app.use(express.json()); // BODY PARSER
 
 // Sign in
 app.post('/signin', (req, res) => {
-    console.log('client attempts signing in ...')
+    // console.log('client attempts signing in ...')
     const username = req.body.username
     const password = req.body.password
 
     pool.getConnection((err, con) => {
         if(err) {
             console.log(err)
+            con.release()
             res.status(500).json({err: err})
             return
         }
@@ -55,19 +56,52 @@ app.post('/signin', (req, res) => {
 // Get All Courses
 app.get('/courses/:studentID', (req, res) => {
     const studentID = req.params.studentID
-    console.log(`client (student_id = ${studentID}) attempts getting all courses ...`)
+    // console.log(`client (student_id = ${studentID}) attempts getting all courses ...`)
     pool.getConnection((err, con) => {
         if(err) {
+            con.release()
             console.log(err)
             return
         }
 
-        const sql = "SELECT * FROM course"
+        const sql = 
+            `SELECT c.CourseID, c.CourseName, COUNT(IF(sc.StudentID = ${studentID}, 1, NULL)) as Selected ` + 
+            "FROM course c LEFT JOIN studentcourse sc " +
+            "ON sc.CourseID = c.CourseID " +
+            "GROUP BY c.CourseID, c.CourseName"
 
         con.query(sql, (err, rows) => {
             con.release()
             if (err) {
                 console.log(err);
+                res.status(500).json({err: err})
+                return
+            }
+            res.status(200).json(rows)
+        })
+    })
+})
+
+// Update Registration
+app.post('/registration/', (req, res) => {
+    const studentID = req.body.StudentID
+    const courseID = req.body.CourseID
+    const value = req.body.Value
+
+    const sql = value ? 
+        `INSERT INTO studentcourse (StudentID, CourseID) VALUES (${studentID}, ${courseID})` : 
+        `DELETE FROM studentcourse WHERE StudentID = ${studentID} AND CourseID = ${courseID}`
+    
+    pool.getConnection((err, con) => {
+        if(err) {
+            con.release()
+            console.log(err)
+            return
+        }
+        con.query(sql, (err, rows) => {
+            con.release()
+            if(err) {
+                console.log(err)
                 res.status(500).json({err: err})
                 return
             }
