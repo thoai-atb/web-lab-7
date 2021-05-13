@@ -1,0 +1,19 @@
+.profile-info {
+    display: inline-table;
+    text-align: left;
+    border: 2px solid gray;
+    padding: 5px 10px;
+}
+
+.profile-info-row {
+    display: table-row;
+}
+
+.profile-info-data {
+    display: table-cell;
+    padding: 2px 5px;
+}
+
+.profile-info-data:nth-child(odd) {
+    text-align: left;
+}

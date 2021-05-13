@@ -15,7 +15,7 @@ export default function Login() {
         if(currentStudent) {
             setErrMessage()
             formRef.current.reset()
-            history.push('/courses')
+            history.push('/')
         }
     }, [currentStudent, history])
 

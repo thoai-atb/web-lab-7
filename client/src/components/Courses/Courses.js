@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import './Courses.css'
 
@@ -46,12 +47,12 @@ export default function Courses() {
     }, [currentStudent])
 
     return (
-        <div className='courses'>
+        <div className='page'>
             <h1>Course Registration</h1>
-            <div className='courses-subtitle'>
+            <div className='subtitle'>
                 <p>🖐Hi, <em>{currentStudent.StudentName}</em> (<span className='logout' onClick={() => logout()}>Log Out</span>), register your courses here:</p>
             </div>
-            <table className='course-table'>
+            <table>
                 <thead>
                     <tr>
                         <td>ID</td>
@@ -75,10 +76,13 @@ export default function Courses() {
                 }
                 </tbody>
             </table>
-            <div className='courses-footer'>
+            <div className='footer'>
                 {
-                    loading && <p className='msg'>saving registration ...</p>
+                    loading ? <p className='msg-suc'>saving registration ...</p> : <p className='msg'>Courses will automatically saved after ticking the checkboxes</p>
                 }
+                <div>
+                    <Link to='/profile'>Back to Profile</Link>
+                </div>
             </div>
         </div>
     )

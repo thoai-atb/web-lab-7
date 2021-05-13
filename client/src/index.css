@@ -27,3 +27,64 @@ button {
   margin: 0px 10px;
   font-size: 18px;
 }
+
+table {
+  display: inline-block;
+  border: 2px solid gray;
+  border-collapse: collapse;
+}
+
+table td {
+  padding: 10px 20px;
+}
+
+table td.name {
+  text-align: left
+}
+
+table thead {
+  background-color: gray;
+  color: white;
+}
+
+.subtitle {
+  margin: 20px 0px 40px 0px;
+}
+
+table input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+}
+
+.footer {
+  text-align: center;
+  margin: 10px 0px;
+}
+
+.footer .msg-suc {
+  display: inline-block;
+  padding: 5px 20px;
+  background-color: rgba(0, 255, 0, 0.363);
+  color: rgb(0, 117, 0);
+  border: 2px solid rgb(0, 160, 0);
+  width: auto;
+}
+
+.footer .msg {
+  display: inline-block;
+  padding: 5px 20px;
+  color: rgb(88, 88, 88);
+  width: auto;
+}
+
+
+.subtitle .logout {
+  font-style: oblique;
+  color:saddlebrown;
+  font-weight: bold;
+}
+
+.subtitle .logout:hover {
+  font-style: normal;
+  cursor: pointer;
+}

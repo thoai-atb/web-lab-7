@@ -82,6 +82,34 @@ app.get('/courses/:studentID', (req, res) => {
     })
 })
 
+app.get('/courses/registered/:studentID', (req, res) => {
+
+    const studentID = req.params.studentID
+
+    pool.getConnection((err, con) => {
+        if(err) {
+            con.release()
+            console.log(err)
+            return
+        }
+        const sql = 
+            `SELECT c.CourseID, c.CourseName ` + 
+            "FROM course c INNER JOIN studentcourse sc " +
+            `ON sc.CourseID = c.CourseID AND sc.StudentID = ${studentID}`
+
+        con.query(sql, (err, rows) => {
+            con.release()
+            if (err) {
+                console.log(err);
+                res.status(500).json({err: err})
+                return
+            }
+            res.status(200).json(rows)
+        })
+    })
+
+})
+
 // Update Registration
 app.post('/registration/', (req, res) => {
     const studentID = req.body.StudentID
